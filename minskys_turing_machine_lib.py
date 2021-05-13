@@ -77,7 +77,7 @@ class UTM:
         self.states[21].define_operation('0', 'M', self.states[18], 3)
         self.states[21].define_operation('1', 'M', self.states[19], 3)
         self.states[22].define_operation('A', '0', self.states[21], 3)
-        self.states[22].define_operation('B', '1', self.states[20], 3)
+        self.states[22].define_operation('B', '0', self.states[20], 3)
         self.states[23].define_operation('A', '1', self.states[21], 3)
         self.states[23].define_operation('B', '1', self.states[20], 3)
 
