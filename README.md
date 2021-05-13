@@ -8,6 +8,7 @@ The default input to the simulated machine is an exploit that achieves arbitrary
 
 Run the program with
 
+```console
 $ python3.7 minskys_turing_machine.py 
 State 19 reading S writing B shifting left  resulting in:  00111MYBAAXAAAAAAAXAABAAAAB1000Y01SX0000001X0010110X0100011X0110100Y00 Step 380
                                                                                     A
@@ -23,9 +24,11 @@ State 18 reading S writing A shifting left  resulting in:  M00000Y00AX0000000X00
                                                                    A
 Ran out of tape!
 
+```
 
 Help is provided with 
 
+```console
 $ python3.7 minskys_turing_machine.py -h
 usage: minskys_turing_machine.py [-h] [--machine_condition MACHINE_CONDITION]
                                  [--machine_description MACHINE_DESCRIPTION]
@@ -49,3 +52,5 @@ optional arguments:
                         execution.
   --verbosity VERBOSITY
                         Degree of vebosity, 1-4.
+
+```
