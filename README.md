@@ -1,5 +1,4 @@
-# turing
-Exploiting the UTM
+# Arbitrary Code Execution in the Universal Turing Machine
 
 This is an implementation of the Universal Turing Machine as presented in Minsky, Computation: Finite and infinite machines, 1967, Chapter 7.
 
