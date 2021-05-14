@@ -54,3 +54,5 @@ optional arguments:
                         Degree of vebosity, 1-4.
 
 ```
+
+For an alternative re-implementation of the vulnerable Minsky Turing machine, check out [Andreas Rozek's specification](https://rozek.de/Turing-Machine/index_de.html) for [Martín Ugarte's Turing machine simulator](https://turingmachinesimulator.com). 
