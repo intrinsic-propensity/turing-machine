@@ -55,6 +55,6 @@ optional arguments:
 
 ```
 
-The vulnerability has been assigned [CVE-2021-32471](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-32471) and is presented in detail in [Pontus Johnson](https://www.kth.se/profile/pontusj)'s paper [Intrinsic Propensity for Vulnerability in Computers? Arbitrary Code Execution in the Universal Turing Machine](arxiv.org/abs/2105.02124) from 2021.
+The vulnerability has been assigned [CVE-2021-32471](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-32471) and is presented in detail in [Pontus Johnson](https://www.kth.se/profile/pontusj)'s paper [Intrinsic Propensity for Vulnerability in Computers? Arbitrary Code Execution in the Universal Turing Machine](https://arxiv.org/abs/2105.02124) from 2021.
 
 For an alternative re-implementation of the vulnerable Minsky Turing machine, check out [Andreas Rozek's specification](https://rozek.de/Turing-Machine/index_de.html) for [Martín Ugarte's Turing machine simulator](https://turingmachinesimulator.com). 
