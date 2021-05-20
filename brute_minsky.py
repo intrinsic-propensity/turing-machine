@@ -1,6 +1,7 @@
 import argparse
 from minskys_turing_machine_lib import UTM
 
+# Verbosity
 parser = argparse.ArgumentParser(description='A Universal Turing Machine as described in Minsky, Computation: Finite and infinite machines, 1967, Chapter 7.')
 parser.add_argument('--verbosity', type=int, default=1, help='Degree of vebosity, -1 to 4.')
 
