@@ -8,7 +8,8 @@ parser.add_argument('--machine_tape', type=str, default="1111YBAAXAAAAAAAXAABAAA
 parser.add_argument('--verbosity', type=int, default=1, help='Degree of vebosity, -1 to 4.')
 parser.add_argument('--explicit_quintuples', action='store_true', help='In Minsky\'s original machine the most common quintuples, of the form (qi, sj, qi, sj, dij) are implicit. We can require explicit ones instead, though.')
 parser.add_argument('--dangerous_quintuples', action='store_true', help='If explicit quintuples are enabled, we can add the specific set of quintuples that make exploitation possible. The results will be the same is when disabling explicit quintuples, though.')
+parser.add_argument('--t_buffer', type=int, default=3, help='The size of the initial buffer of T\'s tape, between the "M" and the "Y".')
 args = parser.parse_args()
 
-utm = UTM(args.machine_description, args.machine_tape, args.machine_condition, 2, verbosity=args.verbosity, implicit_quintuples=(not args.explicit_quintuples), dangerous_quintuples=args.dangerous_quintuples)
+utm = UTM(args.machine_description, args.machine_tape, args.machine_condition, 2, t_buffer=args.t_buffer, verbosity=args.verbosity, implicit_quintuples=(not args.explicit_quintuples), dangerous_quintuples=args.dangerous_quintuples)
 utm.execute()
