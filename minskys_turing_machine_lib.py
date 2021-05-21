@@ -3,7 +3,7 @@ import argparse
 # The Universal Turing Machine
 class UTM:
 
-    def __init__(self, simulated_machine_description, simulated_machine_tape, simulated_machine_condition, infinity_buffer_size, t_buffer=3, implicit_quintuples=True, dangerous_quintuples=False, verbosity=1):
+    def __init__(self, simulated_machine_description, simulated_machine_tape, simulated_machine_condition, buffer_size, implicit_quintuples=True, dangerous_quintuples=False, verbosity=1):
         self.verbosity = verbosity
         
         # Defining the UTM as presented in Minsky, Computation: Finite and infinite machines, 1967, Chapter 7.
@@ -186,8 +186,8 @@ class UTM:
         # This is the initial state
         self.state = self.states[6]
         # The tape is composed of a buffer to represent the infinite number of zeros of the UTM, the simulated machine's tape. it's internal machine condition, and the actual program describing that simulated machine.
-        self.tape = Tape(list("0"*infinity_buffer_size + simulated_machine_tape + "M" + "0"*t_buffer + "Y" + simulated_machine_condition + simulated_machine_description + "Y" + "0"*infinity_buffer_size), \
-            infinity_buffer_size + len(simulated_machine_tape) + 1 + t_buffer + 1 + len(simulated_machine_condition))
+        self.tape = Tape(list("0"*buffer_size + simulated_machine_tape + "M000Y" + simulated_machine_condition + simulated_machine_description + "Y" + "0"*buffer_size), \
+            buffer_size + len(simulated_machine_tape) + 5 + len(simulated_machine_condition))
 
     # Run the UTM
     def execute(self):
