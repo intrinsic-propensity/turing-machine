@@ -10,5 +10,5 @@ parser.add_argument('--explicit_quintuples', action='store_true', help='In Minsk
 parser.add_argument('--dangerous_quintuples', action='store_true', help='If explicit quintuples are enabled, we can add the specific set of quintuples that make exploitation possible. The results will be the same is when disabling explicit quintuples, though.')
 args = parser.parse_args()
 
-utm = UTM(args.machine_description, args.machine_tape, args.machine_condition, 2, verbosity=args.verbosity, implicit_quintuples=(not args.explicit_quintuples), dangerous_quintuples=args.dangerous_quintuples)
+utm = UTM(args.machine_description, args.machine_tape, args.machine_condition, verbosity=args.verbosity, implicit_quintuples=(not args.explicit_quintuples), dangerous_quintuples=args.dangerous_quintuples)
 utm.execute()

@@ -7,8 +7,18 @@ parser.add_argument('--verbosity', type=int, default=-1, help='Degree of vebosit
 
 args = parser.parse_args()
 
+def check_results(utm):
+    if (utm.tape.tape[:4] == ['0','0','0','0']):
+        if (args.verbosity >= 0):
+            print("Success")
+    else:
+        any_failure = True
+        print("Failure")
+        print(utm.step)
+
 # The original program cannot be manipulated by the attacker, so the exploit must be able to handle all original programs. Because the first quintuple is all that the machine ever needs to come into contact with, we need not concern ourselves with larger programs; if it works for any single quintuple, then it will work for all programs.
 any_failure = False
+print("Exploring all possible initial quintuples.")
 for quintuple_1_machine_state in ['00', '01', '10', '11']:
     for quintuple_1_scanned_symbol in ['0', '1']:
         for quintuple_1_target_state in ['00', '01', '10', '11']:
@@ -33,18 +43,26 @@ for quintuple_1_machine_state in ['00', '01', '10', '11']:
                     for initial_fake_symbol in ['A']:
                         initial_fake_condition = initial_fake_state + initial_fake_symbol
                         machine_tape= initial_fake_input + "Y" + initial_fake_condition + malicious_code + "S"
-                        utm = UTM(machine_description, machine_tape, utm_condition, 2, verbosity=args.verbosity)
+                        utm = UTM(machine_description, machine_tape, utm_condition, verbosity=args.verbosity)
                         steps = utm.execute()
-                        print("--machine_tape=\"" + machine_tape + "\" --machine_condition=\"" + utm_condition + "\" --machine_description=\"" + machine_description + "\"")
-                        if (utm.tape.tape[:4] == ['0','0','0','0']):
-                            print("Success")
-                        else:
-                            any_failure = True
-                            print("Failure")
-                            print(steps)
+                        if args.verbosity >= 0:
+                            print("--machine_tape=\"" + machine_tape + "\" --machine_condition=\"" + utm_condition + "\" --machine_description=\"" + machine_description + "\"")
+                        check_results(utm)
+
+# The size of the buffer at the start of T's tape (between M and Y) can assume any value above 2
+machine_description = "X0000001X0010110X0100011X0110100"
+machine_tape = "1111YBAAXAAAAAAAXAABAAAAS"
+machine_condition = "001"
+print("Exploring various sizes of the buffer at the start of T's tape.")
+for t_buffer_size in [3, 4, 8, 16, 32]:
+    utm = UTM(machine_description, machine_tape, machine_condition, t_buffer_size=t_buffer_size, verbosity=args.verbosity)
+    steps = utm.execute()
+    check_results(utm)
+
 print()
 if (any_failure):
     print("At least one test failed")
 else:
     print("All tests succeeded")
 print()
+
