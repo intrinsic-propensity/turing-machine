@@ -3,11 +3,12 @@ from minskys_turing_machine_lib import UTM
 
 # Verbosity
 parser = argparse.ArgumentParser(description='A Universal Turing Machine as described in Minsky, Computation: Finite and infinite machines, 1967, Chapter 7.')
-parser.add_argument('--verbosity', type=int, default=1, help='Degree of vebosity, -1 to 4.')
+parser.add_argument('--verbosity', type=int, default=-1, help='Degree of vebosity, -1 to 4.')
 
 args = parser.parse_args()
 
 # The original program cannot be manipulated by the attacker, so the exploit must be able to handle all original programs. Because the first quintuple is all that the machine ever needs to come into contact with, we need not concern ourselves with larger programs; if it works for any single quintuple, then it will work for all programs.
+any_failure = False
 for quintuple_1_machine_state in ['00', '01', '10', '11']:
     for quintuple_1_scanned_symbol in ['0', '1']:
         for quintuple_1_target_state in ['00', '01', '10', '11']:
@@ -32,11 +33,18 @@ for quintuple_1_machine_state in ['00', '01', '10', '11']:
                     for initial_fake_symbol in ['A']:
                         initial_fake_condition = initial_fake_state + initial_fake_symbol
                         machine_tape= initial_fake_input + "Y" + initial_fake_condition + malicious_code + "S"
-                        utm = UTM(machine_description, machine_tape, utm_condition, 2, args.verbosity)
+                        utm = UTM(machine_description, machine_tape, utm_condition, 2, verbosity=args.verbosity)
                         steps = utm.execute()
                         print("--machine_tape=\"" + machine_tape + "\" --machine_condition=\"" + utm_condition + "\" --machine_description=\"" + machine_description + "\"")
                         if (utm.tape.tape[:4] == ['0','0','0','0']):
                             print("Success")
                         else:
+                            any_failure = True
                             print("Failure")
                             print(steps)
+print()
+if (any_failure):
+    print("At least one test failed")
+else:
+    print("All tests succeeded")
+print()
