@@ -35,7 +35,7 @@ for quintuple_1_machine_state in ['00', '01', '10', '11']:
                         utm = UTM(machine_description, machine_tape, utm_condition, 2, args.verbosity)
                         steps = utm.execute()
                         print("--machine_tape=\"" + machine_tape + "\" --machine_condition=\"" + utm_condition + "\" --machine_description=\"" + machine_description + "\"")
-                        if (steps == 1902) or (steps == 2334):
+                        if (utm.tape.tape[:4] == ['0','0','0','0']):
                             print("Success")
                         else:
                             print("Failure")
