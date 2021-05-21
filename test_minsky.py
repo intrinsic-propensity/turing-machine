@@ -7,17 +7,20 @@ parser.add_argument('--verbosity', type=int, default=-1, help='Degree of vebosit
 
 args = parser.parse_args()
 
+any_failure = False
+
 def check_results(utm):
     if (utm.tape.tape[:4] == ['0','0','0','0']):
         if (args.verbosity >= 0):
             print("Success")
     else:
+        global any_failure
         any_failure = True
         print("Failure")
-        print(utm.step)
+        print("Step " + str(utm.step))
+        print("".join(utm.tape.tape))
 
 # The original program cannot be manipulated by the attacker, so the exploit must be able to handle all original programs. Because the first quintuple is all that the machine ever needs to come into contact with, we need not concern ourselves with larger programs; if it works for any single quintuple, then it will work for all programs.
-any_failure = False
 print("Exploring all possible initial quintuples.")
 for quintuple_1_machine_state in ['00', '01', '10', '11']:
     for quintuple_1_scanned_symbol in ['0', '1']:
@@ -50,14 +53,29 @@ for quintuple_1_machine_state in ['00', '01', '10', '11']:
                         check_results(utm)
 
 # The size of the buffer at the start of T's tape (between M and Y) can assume any value above 2
+print("Exploring various sizes of the buffer at the start of T's tape.")
 machine_description = "X0000001X0010110X0100011X0110100"
 machine_tape = "1111YBAAXAAAAAAAXAABAAAAS"
 machine_condition = "001"
-print("Exploring various sizes of the buffer at the start of T's tape.")
 for t_buffer_size in [3, 4, 8, 16, 32]:
     utm = UTM(machine_description, machine_tape, machine_condition, t_buffer_size=t_buffer_size, verbosity=args.verbosity)
     steps = utm.execute()
     check_results(utm)
+
+# The size of the state variable can assume any value above 1 as long as t_buffer tags along
+print("Exploring various sizes of the state variable.")
+for state_size in [1, 2, 3, 4, 8]:
+    t_buffer_size = state_size + 1
+    sb = state_size - 1
+    machine_description = "X" + "0"*sb + "00" + "0"*sb + "001X" + "0"*sb + "01" + "0"*sb + "110X" + "0"*sb +"10" + "0"*sb + "011X" + "0"*sb + "11" + "0"*sb + "100"
+    machine_tape = "1111YB" + "A"*sb + "AX" + "A"*sb + "AA" + "A"*sb + "AAAX" + "A"*sb + "AB" + "A"*sb + "AAAS"
+    machine_condition = "0"*sb + "01"
+    utm = UTM(machine_description, machine_tape, machine_condition, t_buffer_size=t_buffer_size, verbosity=args.verbosity)
+    steps = utm.execute()
+    check_results(utm)
+
+
+
 
 print()
 if (any_failure):
