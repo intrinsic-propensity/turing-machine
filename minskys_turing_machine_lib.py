@@ -3,7 +3,8 @@ import argparse
 # The Universal Turing Machine
 class UTM:
 
-    def __init__(self, simulated_machine_description, simulated_machine_tape, simulated_machine_condition, infinity_buffer_size=2, t_buffer_size=3, implicit_quintuples=True, dangerous_quintuples=False, verbosity=1):
+    def __init__(self, simulated_machine_description, simulated_machine_tape, simulated_machine_condition, infinity_buffer_size=2, t_buffer_size=3, implicit_quintuples=True, dangerous_quintuples=False, max_steps=float("inf"), verbosity=1):
+        self.max_steps = max_steps
         self.verbosity = verbosity
         
         # Defining the UTM as presented in Minsky, Computation: Finite and infinite machines, 1967, Chapter 7.
@@ -192,7 +193,7 @@ class UTM:
     # Run the UTM
     def execute(self):
         self.print_all(ignore_verbosity=True)
-        while True:
+        while self.step < self.max_steps:
             self.step += 1
             symbol = self.tape.scan()
             self.print_before_operation()
