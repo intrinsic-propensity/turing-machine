@@ -9,9 +9,10 @@ parser.add_argument('--infinity_buffer_size', type=int, default=2, help='Number 
 parser.add_argument('--t_buffer_size', type=int, default=6, help='Number of zeros to the right of the simulated machine\'s tape,')
 parser.add_argument('--max_steps', type=int, default=float("inf"), help='Maximum number of steps to execute before terminating the program.')
 parser.add_argument('--verbosity', type=int, default=1, help='Degree of vebosity, -1 to 4.')
+parser.add_argument('--print_start_step', type=int, default=0, help='The step at which printing of output commences.')
 parser.add_argument('--explicit_quintuples', action='store_true', help='In Minsky\'s original machine the most common quintuples, of the form (qi, sj, qi, sj, dij) are implicit. We can require explicit ones instead, though.')
 parser.add_argument('--dangerous_quintuples', action='store_true', help='If explicit quintuples are enabled, we can add the specific set of quintuples that make exploitation possible. The results will be the same is when disabling explicit quintuples, though.')
 args = parser.parse_args()
 
-utm = UTM(args.machine_description, args.machine_tape, args.machine_condition, infinity_buffer_size=args.infinity_buffer_size, t_buffer_size=args.t_buffer_size, max_steps=args.max_steps, verbosity=args.verbosity, implicit_quintuples=(not args.explicit_quintuples), dangerous_quintuples=args.dangerous_quintuples)
+utm = UTM(args.machine_description, args.machine_tape, args.machine_condition, infinity_buffer_size=args.infinity_buffer_size, t_buffer_size=args.t_buffer_size, max_steps=args.max_steps, verbosity=args.verbosity, print_start_step=args.print_start_step, implicit_quintuples=(not args.explicit_quintuples), dangerous_quintuples=args.dangerous_quintuples)
 utm.execute()

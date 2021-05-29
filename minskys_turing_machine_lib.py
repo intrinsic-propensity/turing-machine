@@ -3,10 +3,11 @@ import argparse
 # The Universal Turing Machine
 class UTM:
 
-    def __init__(self, simulated_machine_description, simulated_machine_tape, simulated_machine_condition, infinity_buffer_size=2, t_buffer_size=3, implicit_quintuples=True, dangerous_quintuples=False, max_steps=float("inf"), verbosity=1):
+    def __init__(self, simulated_machine_description, simulated_machine_tape, simulated_machine_condition, infinity_buffer_size=2, t_buffer_size=3, implicit_quintuples=True, dangerous_quintuples=False, max_steps=float("inf"), verbosity=1, print_start_step=0):
         self.max_steps = max_steps
         self.verbosity = verbosity
-        
+        self.print_start_step = print_start_step
+
         # Defining the UTM as presented in Minsky, Computation: Finite and infinite machines, 1967, Chapter 7.
         # Defining the UTMs states.
         self.states = []
@@ -36,41 +37,41 @@ class UTM:
         self.states.append(State(23, "L", implicit_quintuples=implicit_quintuples))
 
         # Defining the UTMs operations.
-        self.states[1].define_operation('0', 'A', self.states[3], 4)
-        self.states[1].define_operation('1', 'B', self.states[4], 4)
-        self.states[2].define_operation('A', '0', self.states[1], 4)
-        self.states[2].define_operation('B', '1', self.states[5], 4)
+        self.states[1].define_operation('0', 'A', self.states[3], 3)
+        self.states[1].define_operation('1', 'B', self.states[4], 3)
+        self.states[2].define_operation('A', '0', self.states[1], 3)
+        self.states[2].define_operation('B', '1', self.states[5], 3)
         self.states[2].define_operation('X', 'X', self.states[7], 2)
-        self.states[3].define_operation('Y', 'Y', self.states[2], 4)
-        self.states[4].define_operation('X', 'X', self.states[6], 4)
-        self.states[4].define_operation('Y', 'Y', self.states[0], 4)
-        self.states[5].define_operation('0', 'A', self.states[4], 4)
-        self.states[5].define_operation('1', 'B', self.states[3], 4)
-        self.states[6].define_operation('0', 'A', self.states[6], 4)
-        self.states[6].define_operation('1', 'B', self.states[6], 4)
+        self.states[3].define_operation('Y', 'Y', self.states[2], 3)
+        self.states[4].define_operation('X', 'X', self.states[6], 3)
+        self.states[4].define_operation('Y', 'Y', self.states[0], 3)
+        self.states[5].define_operation('0', 'A', self.states[4], 3)
+        self.states[5].define_operation('1', 'B', self.states[3], 3)
+        self.states[6].define_operation('0', 'A', self.states[6], 3)
+        self.states[6].define_operation('1', 'B', self.states[6], 3)
         self.states[6].define_operation('Y', 'Y', self.states[2], 3)
-        self.states[7].define_operation('0', 'A', self.states[9], 4)
-        self.states[7].define_operation('1', 'B', self.states[8], 4)
-        self.states[8].define_operation('Y', 'Y', self.states[10], 4)
-        self.states[9].define_operation('Y', 'Y', self.states[11], 4)
-        self.states[10].define_operation('0', 'B', self.states[12], 4)
-        self.states[10].define_operation('1', 'B', self.states[12], 4)
+        self.states[7].define_operation('0', 'A', self.states[9], 3)
+        self.states[7].define_operation('1', 'B', self.states[8], 3)
+        self.states[8].define_operation('Y', 'Y', self.states[10], 3)
+        self.states[9].define_operation('Y', 'Y', self.states[11], 3)
+        self.states[10].define_operation('0', 'B', self.states[12], 3)
+        self.states[10].define_operation('1', 'B', self.states[12], 3)
         self.states[10].define_operation('X', 'X', self.states[13], 2)
-        self.states[11].define_operation('0', 'A', self.states[12], 4)
-        self.states[11].define_operation('1', 'A', self.states[12], 4)
+        self.states[11].define_operation('0', 'A', self.states[12], 3)
+        self.states[11].define_operation('1', 'A', self.states[12], 3)
         self.states[11].define_operation('X', 'X', self.states[14], 2)
-        self.states[12].define_operation('X', 'X', self.states[7], 4)
-        self.states[13].define_operation('M', 'B', self.states[15], 4)
-        self.states[14].define_operation('M', 'A', self.states[15], 4)
-        self.states[15].define_operation('A', '0', self.states[15], 4)
-        self.states[15].define_operation('B', '1', self.states[15], 4)
+        self.states[12].define_operation('X', 'X', self.states[7], 3)
+        self.states[13].define_operation('M', 'B', self.states[15], 3)
+        self.states[14].define_operation('M', 'A', self.states[15], 3)
+        self.states[15].define_operation('A', '0', self.states[15], 3)
+        self.states[15].define_operation('B', '1', self.states[15], 3)
         self.states[15].define_operation('X', 'X', self.states[16], 3)
         self.states[16].define_operation('0', '0', self.states[17], 3)
         self.states[16].define_operation('1', '1', self.states[17], 3)
         self.states[17].define_operation('0', 'S', self.states[22], 2)
         self.states[17].define_operation('1', 'S', self.states[23], 2)
-        self.states[17].define_operation('A', '0', self.states[17], 4)
-        self.states[17].define_operation('B', '1', self.states[17], 4)
+        self.states[17].define_operation('A', '0', self.states[17], 3)
+        self.states[17].define_operation('B', '1', self.states[17], 3)
         self.states[18].define_operation('S', 'A', self.states[6], 1)
         self.states[19].define_operation('S', 'B', self.states[6], 1)
         self.states[20].define_operation('0', 'M', self.states[18], 3)
@@ -220,28 +221,30 @@ class UTM:
 
     # Printing the output
     def print_before_operation(self, ignore_verbosity=False):
-        if self.verbosity >= 0:
-            operation = self.state.get_operation(self.tape.scan())
-            self.current_verbosity = operation.verbosity
-            if self.current_verbosity <= self.verbosity or ignore_verbosity:
-                print("State " + self.state.id_string(), end = ' ')
-                print("reading " + self.tape.scan(), end = ' ')
-                print("writing " + operation.print_symbol, end = ' ')
-                if operation.target_state:
-                    if operation.target_state.direction == "R":
-                        print("shifting right", end = ' ')
-                    if operation.target_state.direction == "L":
-                        print("shifting left ", end = ' ')
-                else:
-                    print("stopping      ", end = ' ')
+        if self.step >= self.print_start_step:
+            if self.verbosity >= 0:
+                operation = self.state.get_operation(self.tape.scan())
+                self.current_verbosity = operation.verbosity
+                if self.current_verbosity <= self.verbosity or ignore_verbosity:
+                    print("State " + self.state.id_string(), end = ' ')
+                    print("reading " + self.tape.scan(), end = ' ')
+                    print("writing " + operation.print_symbol, end = ' ')
+                    if operation.target_state:
+                        if operation.target_state.direction == "R":
+                            print("shifting right", end = ' ')
+                        if operation.target_state.direction == "L":
+                            print("shifting left ", end = ' ')
+                    else:
+                        print("stopping      ", end = ' ')
                 
 
     def print_after_operation(self, ignore_verbosity=False):
-        if self.verbosity >= 0:
-            if self.current_verbosity <= self.verbosity or ignore_verbosity:
-                print("resulting in:  " + "".join(self.tape.tape), end = ' ')
-                print("Step " + str(self.step))
-                print(" "*59 + " "*self.tape.head_location + "A")
+        if self.step >= self.print_start_step:
+            if self.verbosity >= 0:
+                if self.current_verbosity <= self.verbosity or ignore_verbosity:
+                    print("resulting in:  " + "".join(self.tape.tape), end = ' ')
+                    print("Step " + str(self.step))
+                    print(" "*59 + " "*self.tape.head_location + "A")
 
 
 # The tape of the UTM
