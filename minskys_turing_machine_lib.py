@@ -1,4 +1,5 @@
 import argparse
+import json
 
 # The Universal Turing Machine
 class UTM:
@@ -7,6 +8,7 @@ class UTM:
         self.max_steps = max_steps
         self.verbosity = verbosity
         self.print_start_step = print_start_step
+        self.trace = []
 
         # Defining the UTM as presented in Minsky, Computation: Finite and infinite machines, 1967, Chapter 7.
         # Defining the UTMs states.
@@ -211,7 +213,11 @@ class UTM:
                     break
                 break
             self.print_after_operation()
+            self.append_trace(operation)
         self.print_all(ignore_verbosity=True)
+        json_trace = json.dumps(self.trace)
+        with open("trace.json", "w") as outfile:
+            outfile.write(json_trace)
         return self.step
 
     def print_all(self, ignore_verbosity=False):
@@ -244,6 +250,17 @@ class UTM:
                     print("resulting in:  " + "".join(self.tape.tape), end = ' ')
                     print("Step " + str(self.step))
                     print(" "*59 + " "*self.tape.head_location + "A")
+
+    def append_trace(self, operation):
+        self.trace.append({
+            "state" : self.state.id,
+            "head" : self.tape.head_location,
+            "reading" : self.tape.scan(),
+            "writing" : operation.print_symbol,
+            "direction" : operation.target_state.direction,
+            "tape" : "".join(self.tape.tape),
+            "step" : self.step
+        })
 
 
 # The tape of the UTM
