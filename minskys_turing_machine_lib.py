@@ -188,8 +188,7 @@ class UTM:
         # This is the initial state
         self.state = self.states[6]
         # The tape is composed of a buffer to represent the infinite number of zeros of the UTM, the simulated machine's tape. it's internal machine condition, and the actual program describing that simulated machine.
-        self.tape = Tape(list("0"*infinity_buffer_size + simulated_machine_tape + "M" + "0"*t_buffer_size + "Y" + simulated_machine_condition + simulated_machine_description + "Y" + "0"*infinity_buffer_size), \
-            infinity_buffer_size + len(simulated_machine_tape) + 1 + t_buffer_size + 1 + len(simulated_machine_condition))
+        self.tape = Tape(list("0"*infinity_buffer_size + simulated_machine_tape + "M" + "0"*t_buffer_size + "Y" + simulated_machine_condition + simulated_machine_description + "Y" + "0"*infinity_buffer_size), infinity_buffer_size + len(simulated_machine_tape) + 1 + t_buffer_size + 1 + len(simulated_machine_condition))
 
     # Run the UTM
     def execute(self):
