@@ -54,7 +54,7 @@ optional arguments:
 
 ```
 
-The vulnerability has been assigned [CVE-2021-32471](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-32471) and is presented in detail in [Pontus Johnson](https://www.kth.se/profile/pontusj)'s paper [Intrinsic Propensity for Vulnerability in Computers? Arbitrary Code Execution in the Universal Turing Machine](https://arxiv.org/abs/2105.02124) from 2021.
+The vulnerability has been assigned [CVE-2021-32471](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-32471) and is presented in detail in [Pontus Johnson](https://www.kth.se/profile/pontusj)'s paper [Intrinsic Propensity for Vulnerability in Computers? Arbitrary Code Execution in the Universal Turing Machine](https://arxiv.org/abs/2105.02124) from 2021. There is also [a talk on YouTube](https://youtu.be/pujUhiX9Mvk) on the vulnerability and its exploitation.
 
 A visual simulation of the exploit is available at https://intrinsic-propensity.github.io.
 
